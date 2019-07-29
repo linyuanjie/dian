@@ -1,81 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>圣杯布局进阶版-flex布局实现</title>
-	<style type="text/css">
-		html,body{
-			width: 100%;
-			height: 100%;
-			min-width: 1200px;
-		}
-		.layout{
-			width: 100%;
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-		.header{
-			flex: 0 0 70px;
-			background:#F39322;
-		}
-		.main{
-			display: flex;
-			flex: 1;
-			flex-direction: column;
-			overflow: auto;
-		}
-		.center{
-			flex: 1;
-			display: flex;
-			background:#BCE5E5;
-		}
-		.left{
-			flex: 0 0 250px;
-			background:#02A899;
-		}
-		.content{
-			flex: 1;
-			background: #FEE064;
-			overflow: hidden;
-		}
-		.right{
-			flex: 0 0 250px;
-			background: #02A899;
-		}
-		.bottom{
-			flex: 0 0 70px;
-			background:#C7262F;
-		}
-		.page{
-			width: 100%;
-			height: 850px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            background:#ccc;
+        }
+        h1{
+            text-align: center;
+            color:white;
+        }
+        #btn{
+            width:100px;
+            height:30px;
+            background:#fff;
+            border-radius: 5px;
+            margin-left:500px;
+            margin-top:50px;
+        }
+        .box{
+            width:1000px;
+            height:240px;
+            margin:100px auto 0;
+            clear: both;
+        }
+        .name{
+            width:100px;
+            height:30px;
+            float:left;
+            background:antiquewhite;
+            margin-left:10px;
+            margin-top:10px;
+            text-align: center;
+            line-height:30px;
+        }
+        #span{
+            float: right;
+            position:relative;
+            top:55px;
+            right:185px;
+        }
+    </style>
 </head>
 <body>
-	<div class="layout">
-		<div class="header">这里是顶部栏</div>
-		<div class="main">
-			<div class="center">
-				<div class="left">这里是左侧栏</div>
-				<div class="content">
-					<div class="page">
-						内容模块的宽度需要自适应，需要自动铺满。当顶部栏高度+内容模块高度+底部栏高度小于浏览器高度时，自动铺满。当顶部栏高度+内容模块高度+底部栏高度大于浏览器高度时，顶部栏一直处于浏览器顶端。内容模块跟底部栏处出现滚动条
-					</div>
-				</div>
-				<div class="right">这里是右侧栏</div>
-			</div>
-			<div class="bottom">这里是底部栏</div>
-		</div>
-	</div>
+    <h1>随机点名系统</h1>
+    <span id="span">123</span>
+    <div class="box" id="box"></div>
+    <input type="button" id="btn" value="点名">
 </body>
-<script type="text/javascript">
-	Number.prototype.add = function(n){
-		return this.valueOf() +n;
-	}
-	Number.prototype.minus = function(n){
-		return this.valueOf() - n;
-	}
-	(5).add(3).minus(2);
-</script>
 </html>
+<script>
+    var arrs = ["崔雪莉","郭雪芙","嘉歆","阿芳","雪灵","老王","刘疙瘩","许大妈",
+        "韩晁","静涵","允儿","查灿灿","靓影","杨幂","李静","邓超","李伟","蓝老师"
+        ,"金枝","静恬","允儿","杨幂","晶灵","林志玲","嘉懿","流行","邓超","郭琦"
+        ,"允儿","许大妈","林妹妹","杨幂","佳思","吉玉","张焕","张赛","师傅","菊月"
+        ,"王晶","吉玟","王飞","林志玲","曾艳","王翠青","JaydenLD"];
+    var boxNode = document.querySelector('#box');
+    for(var i=0;i<arrs.length;i++){
+       var divNode = document.createElement('div');
+       divNode.innerHTML=arrs[i];
+       divNode.className = 'name';
+       boxNode.appendChild(divNode);
+    }
+    var btn = document.getElementById('btn');
+    var timeId;
+    btn.onclick=function(){
+        if(this.value == "点名"){
+            timeId=setInterval(function(){
+                for(var i=0;i<arrs.length;i++){
+                    boxNode.children[i].style.background='';
+                }
+
+                var random = parseInt(Math.random()*arrs.length);
+                boxNode.children[random].style.background='red';
+            },100)
+            this.value = "停止";
+        }else{
+            clearInterval(timeId);
+            this.value='点名';
+        }
+    }
+    var span = document.querySelector('#span');
+    getTime();
+    setInterval(getTime,1000);
+    function getTime(){
+        var day = new Date;
+        var year = day.getFullYear();
+        var month = day.getMonth()+1;
+        var dat = day.getDate();
+        var hour = day.getHours();
+        var mit = day.getMinutes();
+        var sed = day.getSeconds();
+        span.innerHTML = year+'-'+month+'-'+dat+' '+hour+':'+mit+':'+sed;
+    }
+</script>
